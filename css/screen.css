@@ -56,6 +56,14 @@
     --global-whitespace-lg: calc(var(--global-baseline) * 4); /*  = 32px */
     --global-whitespace-xl: calc(var(--global-whitespace) * 2); /*  = 48px */
     --global-whitespace-xxl: calc(var(--global-whitespace) * 3); /*  = 72px */
+
+    /* Input stuff */
+    --global-input-backgroundColor: White;
+    --global-input-color: var(--global-color-neutral-xxxx-dark);
+    --global-input-borderColor: var(--global-color-neutral-xxx-light);
+    --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
+    --global-input-focus-borderColor: var(--global-color-alpha);
+    --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
 }
 
 /*------------------------------------*\
@@ -601,10 +609,12 @@ input::placeholder {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
-    border: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+     /*Lokale variabele aanmaken met een default waarde die een globale variabele is*/
+    border: var(--input-borderWidth, var(--global-borderWidth)) solid var(--input-borderColor, var(--global-input-borderColor));
     border-radius: var(--global-borderRadius);
-    color: var(--global-color-neutral-xxxx-dark);
-    background-color: White;
+    color: var(--global-input-color);
+    /*Lokale variabele aanmaken met een default waarde die een globale variabele is*/
+    background-color: var(--input-backgroundColor, var(--global-input-backgroundColor));
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
@@ -614,13 +624,13 @@ input::placeholder {
 }
 
 .c-input:hover {
-    border-color: var(--global-color-neutral-xx-light);
+    border-color: var(--global-input-hover-borderColor);
 }
 
 .c-input:focus,
 .c-input:active {
-    border-color: var(--global-color-alpha);
-    box-shadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    border-color: var(--global-input-focus-borderColor);
+    box-shadow: var(--global-input-boxShadow);
 }
 
 /* option input for checkboxes and radio buttons */
@@ -678,6 +688,91 @@ input::placeholder {
 .c-button:active {
     background-color: var(--global-color-alpha-dark);
     box-shadow: none;
+}
+
+/* Component: custom option*/
+.c-custom-option {
+    display: flex;
+    align-items: center;
+}
+
+.c-custom-option__symbol {
+    opacity: 0;
+    transform: scale(.5);
+    transition: all var(--global-transitionTiming-alpha)
+}
+
+.c-custom-option__fake-input {
+    display: flex;
+    width: calc(var(--global-baseline) * 2);
+    height: calc(var(--global-baseline) * 2);
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    margin-right: var(--global-whitespace-sm);
+    align-items: center;
+    justify-content: center;
+    transition: all var(--global-transitionTiming-alpha)
+}
+
+.c-custom-option__fake-input--checkbox {
+    border-radius: var(--global-borderRadius);
+}
+
+.c-custom-option__fake-input--radio {
+    border-radius: 100%;
+}
+
+.c-custom-option__fake-input--radio .c-custom-option__symbol {
+    width: 6px;
+    height: 6px;
+    background-color: var(--global-color-alpha);
+    border-radius: 100%;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
+    width: 10px;
+    height: 10px;
+    fill: var(--global-color-alpha);
+}
+
+.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
+    opacity: 1;
+    transform: none;
+}
+
+.c-option--hidden:active + .c-custom-option .c-custom-option__fake-input,
+.c-option--hidden:focus + .c-custom-option .c-custom-option__fake-input {
+    border-color: var(--global-input-focus-borderColor);
+    box-shadow: var(--global-input-boxShadow);
+}
+
+.c-option-list__item {
+    margin-bottom: calc(var(--global-baseline) * 1.5);
+}
+
+/* Component: custom toggle*/
+.c-custom-toggle {
+    display: flex;
+    align-items: center;
+}
+
+.c-custom-toggle__fake-input {
+    display: flex;
+    width: calc(var(--global-baseline) * 6);
+    height: calc(var(--global-baseline) * 3);
+    margin-right: calc(var(--global-baseline) * 2);
+    border-radius: calc(var(--global-baseline) * 3);
+    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    align-items: center;
+    justify-content: center;
+    transition: all var(--global-transitionTiming-alpha)
+}
+
+.c-custom-toggle__fake-input::after {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
 }
 
 /*------------------------------------*\
