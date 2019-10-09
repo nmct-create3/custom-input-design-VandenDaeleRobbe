@@ -20,6 +20,11 @@
 
 :root {
     /* colors */
+    --global-page-color: var(--global-color-neutral-xxxx-dark);
+    --global-label-color: var(--global-color-neutral-xx-dark);
+    --global-page-backgroundColor: var(--global-color-neutral-xxxx-light);
+    --global-form-backgroundColor: White;
+
     --global-color-alpha-light: #4F95FF;
     --global-color-alpha: #3385FF;
     --global-color-alpha-dark: #2E77E6;
@@ -66,6 +71,21 @@
     --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-page-color: White;
+        --global-page-backgroundColor: var(--global-color-neutral-xxxx-dark);
+        --global-form-backgroundColor: var(--global-color-neutral-xxx-dark);
+        --global-label-color: var(--global-color-neutral-x-light);
+    }
+
+    .c-logo {
+        --logo__path--1--fill: White;
+        --logo__path--2--fill: var(--logo__path--1--fill);
+        --logo__path--3--fill: var(--logo__path--1--fill);
+      }
+}
+
 /*------------------------------------*\
 #GENERIC
 \*------------------------------------*/
@@ -80,8 +100,8 @@ html {
     font-size: 16px;
     line-height: 1.5;
     font-family: "Inter Web", Helvetica, arial, sans-serif;
-    color: var(--global-color-neutral-xxxx-dark);
-    background-color: var(--global-color-neutral-xxxx-light);
+    color: var(--global-page-color);
+    background-color: var(--global-page-backgroundColor);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;    
@@ -210,6 +230,11 @@ hr {
     height: var(--global-borderWidth);
     background: LightGrey;
     margin: 0 0 var(--global-whitespace);
+}
+
+option,
+select {
+    color: var(--global-page-color)
 }
 
 a,
@@ -522,15 +547,15 @@ input::placeholder {
 }
 
 .c-logo__path--1 {
-    fill: var(--global-color-neutral-xxxx-dark);
+    fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
 }
-
+  
 .c-logo__path--2 {
-    fill: var(--global-color-alpha);
+    fill: var(--logo__path--2--fill, var(--global-color-alpha));
 }
-
+  
 .c-logo__path--3 {
-    fill: var(--color-alpha-x-dark);
+    fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
 }
 
 /*
@@ -540,7 +565,7 @@ input::placeholder {
 */
 
 .c-card {
-    background-color: White;
+    background-color: var(--global-form-backgroundColor);
     margin-bottom: var(--global-whitespace);
     border-radius: var(--global-borderRadius);
     box-shadow: 0 0 0 var(--global-borderWidth) rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
@@ -555,7 +580,7 @@ input::placeholder {
 
 .c-card__footer {
     text-align: center;
-    border-top: var(--global-borderWidth) solid var(--global-color-neutral-xxx-light);
+    border-top: var(--global-borderWidth) solid var(--global-page-backgroundColor);
 }
 
 .c-card__title {
@@ -610,11 +635,11 @@ input::placeholder {
     appearance: none;
     width: 100%;
      /*Lokale variabele aanmaken met een default waarde die een globale variabele is*/
-    border: var(--input-borderWidth, var(--global-borderWidth)) solid var(--input-borderColor, var(--global-input-borderColor));
+    border: var(--input-borderWidth, var(--global-borderWidth)) solid var(--input-borderColor, var(--global-page-borderColor));
     border-radius: var(--global-borderRadius);
-    color: var(--global-input-color);
+    color: var(--global-page-color);
     /*Lokale variabele aanmaken met een default waarde die een globale variabele is*/
-    background-color: var(--input-backgroundColor, var(--global-input-backgroundColor));
+    background-color: var(--input-backgroundColor, var(--global-page-backgroundColor));
     font-family: inherit;
     font-size: 16px;
     line-height: calc(var(--global-baseline) * 3);
@@ -650,7 +675,7 @@ input::placeholder {
     font-size: 14px;
     padding-bottom: var(--global-whitespace-xs);    
     line-height: calc(var(--global-baseline) * 2);
-    color: var(--global-color-neutral-xx-dark);
+    color: var(--global-label-color);
 }
 
 .c-label--option {
@@ -706,11 +731,12 @@ input::placeholder {
     display: flex;
     width: calc(var(--global-baseline) * 2);
     height: calc(var(--global-baseline) * 2);
-    border: var(--global-borderWidth) solid var(--global-input-borderColor);
+    border: var(--global-borderWidth) solid var(--global-page-backgroundColor);
     margin-right: var(--global-whitespace-sm);
     align-items: center;
     justify-content: center;
-    transition: all var(--global-transitionTiming-alpha)
+    transition: all var(--global-transitionTiming-alpha);
+    background-color: var(--global-page-backgroundColor);
 }
 
 .c-custom-option__fake-input--checkbox {
@@ -761,18 +787,75 @@ input::placeholder {
     height: calc(var(--global-baseline) * 3);
     margin-right: calc(var(--global-baseline) * 2);
     border-radius: calc(var(--global-baseline) * 3);
-    border: var(--global-borderWidth) solid var(--global-input-borderColor);
-    align-items: center;
-    justify-content: center;
+    border: var(--global-borderWidth) solid var(--global-page-backgroundColor);
+    background-color: var(--global-page-backgroundColor);
+    align-items: left;
+    justify-content: left;
     transition: all var(--global-transitionTiming-alpha)
 }
 
 .c-custom-toggle__fake-input::after {
+    background-color: white;
+    position: relative;
     content: '';
     display: block;
+    box-shadow: 0px 1px 3px rgba(0,0,0, 0.16);
+    transition: all var(--global-transitionTiming-alpha);
     width: 22px;
     height: 22px;
-    border-radius: 100%;
+    border-radius: 22px;
+}
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    transform: translateX(calc(var(--global-baseline) * 3));
+}
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input {
+    background-color: var(--global-color-alpha);
+    border-color: var(--global-color-alpha-dark);
+}
+
+.c-option--hidden:focus + .c-custom-toggle .c-custom-toggle__fake-input {
+    border-color: var(--global-input-focus-borderColor);
+    box-shadow: var(--global-input-boxShadow);
+}
+  
+.c-option--hidden:active + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    width: 26px;
+}
+  
+.c-option--hidden:active:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    margin-left: -4px;
+}
+
+.c-toggle-list__item + .c-toggle-list__item {
+    margin-top: 16px;
+}
+
+.c-custom-toggle--inverted {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.c-custom-toggle--inverted > .c-custom-toggle__fake-input {
+    margin-right: 0px;
+}
+
+.c-custom-select {
+    position: relative;
+    display: block;
+}
+
+.c-custom-select__symbol {
+    width: 24px;
+    height: 24px;
+    fill: var(--global-color-neutral-x-light);
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    pointer-events: none;
 }
 
 /*------------------------------------*\
